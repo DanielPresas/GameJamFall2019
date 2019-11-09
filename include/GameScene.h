@@ -20,7 +20,8 @@ public:
 private:
 
 	void childUpdate(float dt) override;
-	
+	Projectile* bullet;
+
 	Player* player;
 	std::vector<Enemy*> enemies;
 	

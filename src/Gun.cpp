@@ -4,11 +4,9 @@
 Gun::Gun(float damage, float rateOfFire, Projectile* bullet)
 	:_damage(damage), _rateOfFire(rateOfFire)
 {
+
 	for (unsigned i = 0; i < 100; i++)
 		_bullets.push_back(new Projectile(*bullet));
-
-	for (auto x : _bullets)
-		x->setActive(false);
 
 }
 
@@ -41,8 +39,8 @@ void Pistol::shoot(float dt)
 {
 
 	_bullets[index]->setActive(true);
-	_bullets[index]->lifetime = 5.0f;
-	_bullets[index]->_rigidBody.setVelocity(_shootDir * 6.0f);
+	_bullets[index]->lifetime = 100.0f;
+	_bullets[index]->_rigidBody.setVelocity(_shootDir);
 
 
 	index++;
