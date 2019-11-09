@@ -33,8 +33,6 @@ void MenuScene::childUpdate(float dt)
 {
 
 	cursorBox._position = glm::vec3(cursorPos.x, cursorPos.y, 0.0f);
-	//CAPP_PRINT("%f %f\n",cursorBox._position.x, cursorBox._position.y);
-	//CAPP_PRINT("box %f %f\n",startBox._position.x, startBox._position.y);
 
 	if (cursorBox.checkCollision(startBox, startBox._position, cursorBox._position)) {
 		dynamic_cast<Cappuccino::UIText*>(ui._uiComponents[0])->setTextColour(glm::vec3(1.0f, 0.0f, 0.0f));

@@ -15,7 +15,7 @@ using Texture     = Cappuccino::Texture;
 
 constexpr GLuint  SCR_WIDTH = 1600;
 constexpr GLuint  SCR_HEIGHT = 1200;
-constexpr GLchar* SCR_TITLE = "The Biggest Crossover";
+constexpr GLchar* SCR_TITLE = "Too Many Characters";
 
 #pragma endregion
 
@@ -41,11 +41,11 @@ int main() {
 
 		FontManager::loadTypeFace("comic.ttf");
 
-		GameScene* game = new GameScene(false);
-
 
 		MenuScene* GiuliaIsTheBest = new MenuScene(true);
 		GiuliaIsTheBest->init();
+		
+		GameScene* game = new GameScene(false);
 
 		application->run();
 		delete application;
