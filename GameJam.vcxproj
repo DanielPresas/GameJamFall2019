@@ -95,10 +95,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\Enemy.h" />
     <ClInclude Include="include\GameScene.h" />
     <ClInclude Include="include\MenuScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Enemy.cpp" />
     <ClCompile Include="src\GameScene.cpp" />
     <ClCompile Include="src\MenuScene.cpp" />
     <ClCompile Include="src\main.cpp" />
