@@ -1,6 +1,7 @@
 #include "Cappuccino/Application.h"
 
 #include "GameScene.h"
+#include "MenuScene.h"
 
 using Application = Cappuccino::Application;
 using FontManager = Cappuccino::FontManager;
@@ -38,9 +39,13 @@ int main() {
 		SoundSystem::setDefaultPath("./Assets/Sounds/");
 		Texture::setDefaultPath("./Assets/Textures/");
 
+		FontManager::loadTypeFace("comic.ttf");
 
-		GameScene* game = new GameScene(true);
-		game->init();
+		GameScene* game = new GameScene(false);
+
+
+		MenuScene* GiuliaIsTheBest = new MenuScene(true);
+		GiuliaIsTheBest->init();
 
 		application->run();
 		delete application;
