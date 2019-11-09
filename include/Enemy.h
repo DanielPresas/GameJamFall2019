@@ -1,11 +1,9 @@
 #pragma once
 #include "Cappuccino/GameObject.h"
 
-using namespace Cappuccino;
-
-class Enemy : public GameObject {
+class Enemy : public Cappuccino::GameObject {
 public:
-	Enemy(Cappuccino::Shader* SHADER, const std::vector<Cappuccino::Texture*>& texture, const std::vector<Cappuccino::Mesh*>& meshes);
+	Enemy(Cappuccino::Shader& shader, const std::vector<Cappuccino::Texture*>& textures, const std::vector<Cappuccino::Mesh*>& meshes);
 
 	void childUpdate(float dt) override;
 
