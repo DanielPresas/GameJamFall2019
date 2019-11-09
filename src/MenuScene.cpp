@@ -47,7 +47,7 @@ void MenuScene::childUpdate(float dt)
 
 	meme += dt;
 
-	dynamic_cast<Cappuccino::UIText*>(ui._uiComponents.back())->setTextColour(glm::vec3(meme, 0.0f, meme));
+	dynamic_cast<Cappuccino::UIText*>(ui._uiComponents.back())->setTextColour(glm::vec3(cosf(glfwGetTime()), sinf(glfwGetTime()), meme));
 
 	ui.update(dt);
 }

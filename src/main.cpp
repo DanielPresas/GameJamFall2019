@@ -33,6 +33,12 @@ int main() {
 		Application* application = new Application(SCR_WIDTH, SCR_HEIGHT, SCR_TITLE);
 		application->init();		
 
+		application->_clearColour.x = 125.f;
+		application->_clearColour.y = 18.f;
+		application->_clearColour.z = 255.f;
+
+		application->_clearColour /= 255.f;
+
 		FontManager::setDefaultPath("./Assets/Fonts/");
 		Mesh::setDefaultPath("./Assets/Meshes/");
 		Shader::setDefaultPath("./Assets/Shaders/");
