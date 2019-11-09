@@ -330,6 +330,7 @@ ASALocalRun/
 .mfractor/
 
 
+!Assets/**/*.obj
 !Assets/*
 *.vcxproj
 *.filters
