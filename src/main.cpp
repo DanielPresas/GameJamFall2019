@@ -48,10 +48,10 @@ int main() {
 		FontManager::loadTypeFace("comic.ttf");
 
 
+		GameScene* game = new GameScene(false);
 		MenuScene* GiuliaIsTheBest = new MenuScene(true);
 		GiuliaIsTheBest->init();
 		
-		GameScene* game = new GameScene(false);
 
 		application->run();
 		delete application;
