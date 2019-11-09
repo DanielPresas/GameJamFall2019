@@ -2,8 +2,8 @@
 
 using namespace Cappuccino;
 
-Enemy::Enemy(Cappuccino::Shader* SHADER, const std::vector<Cappuccino::Texture*>& texture, const std::vector<Cappuccino::Mesh*>& meshes)
-	:GameObject(*SHADER,texture,meshes)
+Enemy::Enemy(Shader& shader, const std::vector<Texture*>& textures, const std::vector<Mesh*>& meshes)
+	:GameObject(shader, textures, meshes)
 {
 	_rigidBody.setGrav(false);
 }
