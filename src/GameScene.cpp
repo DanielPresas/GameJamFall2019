@@ -21,12 +21,11 @@ GameScene::GameScene(bool firstScene) : Scene(firstScene)
 	p = glm::perspective(glm::radians(45.0f), (float)1600.0f / (float)1200.0f, 0.1f, 100.0f);
 	camera.setPosition(glm::vec3(0.0f, 10.0f, 7.0f));
 	camera.lookAt(glm::vec3(0.0f, 0.0f, 0.0f));
+
 	for (int i = 0; i < enemies.size(); ++i) {
 		enemies[i]->_rigidBody._position = glm::vec3((i - 1) * 1.0f, 0.0f, -3.0f) * 2.0f;
 		enemies[i]->_rigidBody.setViewProjMat(camera.whereAreWeLooking(), p);
 	}
-
-
 
 }
 
@@ -47,7 +46,6 @@ bool GameScene::exit() {
 }
 
 void GameScene::childUpdate(float dt) {
-
 
 	dirLight._dirLightShader.loadViewMatrix(camera);
 	dirLight.updateViewPos(camera.getPosition());
