@@ -13,9 +13,11 @@ public:
 
 	void childUpdate(float dt) override;
 
+	Gun* gun;
+
+	int health = 3;
 private:
 
-	Gun* _gun;
 	float _speed = 5.0f;
 	
 	Cappuccino::CappInput _input;

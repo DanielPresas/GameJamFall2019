@@ -5,13 +5,16 @@ using namespace Cappuccino;
 Player::Player(Shader& shader, std::vector<Texture*>& textures, std::vector<Mesh*>& meshes, Gun* gun) :
 	GameObject(shader, textures, meshes), _input(true, 0) {
 	
-	_rigidBody.setGrav(false);
 	auto loader = HitBoxLoader("./Assets/Meshes/playerBox.obj");
 
-	for (auto x : loader._boxes) 
+	for(auto x : loader._boxes) {
 		_rigidBody._hitBoxes.push_back(x);
+	}
 
-	_gun = gun;
+	_rigidBody.drawHitBox = false;
+	_rigidBody.setGrav(false);
+
+	this->gun = gun;
 
 }
 
@@ -59,7 +62,7 @@ void Player::childUpdate(const float dt) {
 	if(isShooting) {
 		shootDirection = glm::normalize(shootDirection);
 
-		_gun->_shootDir = shootDirection;
-		_gun->shoot(dt, _rigidBody._position);
+		gun->_shootDir = shootDirection;
+		gun->shoot(dt, _rigidBody._position);
 	}
 }
