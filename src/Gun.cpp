@@ -1,20 +1,20 @@
 #include "Gun.h"
 #include "Cappuccino/HitBoxLoader.h"
 
-Gun::Gun(float damage, float rateOfFire, Projectile* bullet)
+Gun::Gun(float damage, float rateOfFire, Cappuccino::Shader* shader)
 	:_damage(damage), _rateOfFire(rateOfFire)
 {
 
-	for (unsigned i = 0; i < 100; i++)
-		_bullets.push_back(new Projectile(*bullet));
-
+	_bullets.push_back(new Projectile(shader, std::vector<Cappuccino::Texture*>{new Cappuccino::Texture("nut.png", Cappuccino::TextureType::DiffuseMap)}, std::vector<Cappuccino::Mesh*>{new Cappuccino::Mesh("projectile.obj")}));
+	for (unsigned i = 0; i < 99; i++)
+		_bullets.push_back(_bullets[0]);
 }
 
 Projectile::Projectile(Cappuccino::Shader* SHADER, const std::vector<Cappuccino::Texture*>& textures, const std::vector<Cappuccino::Mesh*>& meshes)
-	:Cappuccino::GameObject(*SHADER,textures,meshes)
+	:Cappuccino::GameObject(*SHADER, textures, meshes)
 {
 	auto loader = Cappuccino::HitBoxLoader("./Assets/Meshes/projectileBox.obj");
-	
+
 	for (auto x : loader._boxes)
 		_rigidBody._hitBoxes.push_back(x);
 
@@ -30,17 +30,26 @@ void Projectile::childUpdate(float dt)
 	}
 }
 
-Pistol::Pistol(Projectile* bullet)
-	:Gun(1.0f,0.6f,bullet)
+Pistol::Pistol(Cappuccino::Shader* shader)
+	:Gun(1.0f, 0.6f, shader)
 {
 }
 
-void Pistol::shoot(float dt)
+void Pistol::shoot(float dt, const glm::vec3& startPos)
 {
 
+	static float timer = _rateOfFire;
+
+	timer -= dt;
+
+	if (!(timer <= 0.0f))
+		return;
+	timer = _rateOfFire;
+
+	_bullets[index]->_rigidBody._position = startPos;
 	_bullets[index]->setActive(true);
-	_bullets[index]->lifetime = 100.0f;
-	_bullets[index]->_rigidBody.setVelocity(_shootDir);
+	_bullets[index]->lifetime = 10.0f;
+	_bullets[index]->_rigidBody.setVelocity(_shootDir * 30.0f);
 
 
 	index++;

@@ -6,16 +6,15 @@ GameScene::GameScene(bool firstScene) : Scene(firstScene)
 	player->_transform.rotate(glm::vec3(0.0f, 1.0f, 0.0f), 180);
 	player->_rigidBody._position = glm::vec3(0.0f, 0.0f, 3.0f);
 
-	bullet = new Projectile(&dirLight._dirLightShader, std::vector<Cappuccino::Texture*>{new Cappuccino::Texture("nut.png", Cappuccino::TextureType::DiffuseMap)}, std::vector<Cappuccino::Mesh*>{new Cappuccino::Mesh("projectile.obj")});
 	//enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("gunDiffuse.png", TextureType::DiffuseMap), new Texture("gunDiffuse.png", TextureType::SpecularMap)  }, std::vector<Mesh*>{ new Mesh("gun3.obj") }
 	//));
-	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Kratos.png", TextureType::DiffuseMap), new Texture("Sans.jpg", TextureType::SpecularMap) }, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Pistol(bullet)));
-	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Pacman.png", TextureType::DiffuseMap), new Texture("Pacman.png", TextureType::SpecularMap)		 }, std::vector<Mesh*>{ new Mesh("pacman.obj"), }, new Pistol(bullet)));
+	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Kratos.png", TextureType::DiffuseMap), new Texture("Sans.jpg", TextureType::SpecularMap) }, std::vector<Mesh*>{ new Mesh("humanoid2.obj") },new Pistol(&dirLight._dirLightShader)));
+	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Pacman.png", TextureType::DiffuseMap), new Texture("Pacman.png", TextureType::SpecularMap)		 }, std::vector<Mesh*>{ new Mesh("pacman.obj"), }, new Pistol(&dirLight._dirLightShader)));
 
 	enemies.back()->_transform.scale(glm::vec3(1.0f, 1.0f, 1.0f), 1.0f);
 	glm::mat4 p = glm::mat4(1.0f);
 	p = glm::perspective(glm::radians(45.0f), (float)1600.0f / (float)1200.0f, 0.1f, 100.0f);
-	camera.setPosition(glm::vec3(0.0f, 2.0f, 7.0f));
+	camera.setPosition(glm::vec3(0.0f, 10.0f, 7.0f));
 	camera.lookAt(glm::vec3(0.0f, 0.0f, 0.0f));
 	for (int i = 0; i < enemies.size(); ++i) {
 		enemies[i]->_rigidBody._position = glm::vec3((i - 1) * 1.0f, 0.0f, -3.0f)*2.0f;
@@ -30,7 +29,6 @@ bool GameScene::init() {
 	player->setActive(true);
 	for (auto x : enemies)
 		x->setActive(true);
-	bullet->setActive(true);
 
 	return true;
 }
@@ -48,7 +46,7 @@ void GameScene::childUpdate(float dt) {
 	dirLight._dirLightShader.loadViewMatrix(camera);
 	dirLight.updateViewPos(camera.getPosition());
 
-	enemies[0]->seek(player);
+	enemies[0]->seek(player,dt);
 
 }
 

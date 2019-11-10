@@ -13,23 +13,23 @@ public:
 
 class Gun {
 public:
-	Gun(float damage, float rateOfFire, Projectile* bullet);
+	Gun(float damage, float rateOfFire, Cappuccino::Shader* shader);
 
-	virtual void shoot(float dt) = 0;
+	virtual void shoot(float dt,const glm::vec3& startPos) = 0;
 
 	glm::vec3 _shootDir;
 protected:
-	int index = 0;
 	std::vector<Projectile*> _bullets;
+	int index = 0;
+	float _rateOfFire = 0.0f;
 private:
 	float _damage = 0.0f;
-	float _rateOfFire = 0.0f;
 
 };
 
 class Pistol : public Gun {
 public:
-	Pistol(Projectile* bullet);
+	Pistol(Cappuccino::Shader* shader);
 
-	void shoot(float dt) override;
+	void shoot(float dt, const glm::vec3& startPos) override;
 };

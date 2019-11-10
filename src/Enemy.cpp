@@ -23,7 +23,7 @@ void Enemy::childUpdate(float dt)
 	//triggerVolume.draw();
 }
 
-void Enemy::seek(Cappuccino::GameObject* other)
+void Enemy::seek(Cappuccino::GameObject* other,float dt)
 {
 	auto dir = other->_rigidBody._position - _rigidBody._position;
 
@@ -31,10 +31,10 @@ void Enemy::seek(Cappuccino::GameObject* other)
 
 	_rigidBody.setVelocity(norm * 3.0f);
 
-	attack(other);
+	attack(other,dt);
 }
 
-void Enemy::attack(Cappuccino::GameObject* other)
+void Enemy::attack(Cappuccino::GameObject* other,float dt)
 {
 	if (!other->checkCollision(triggerVolume, _rigidBody._position))
 		return;
@@ -46,7 +46,7 @@ void Enemy::attack(Cappuccino::GameObject* other)
 
 	_gun->_shootDir = glm::normalize(_rigidBody._vel);
 
-	_gun->shoot(1.0f);
+	_gun->shoot(dt,_rigidBody._position);
 
 }
 

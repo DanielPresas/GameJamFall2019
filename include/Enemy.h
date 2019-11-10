@@ -8,9 +8,9 @@ public:
 
 	void childUpdate(float dt) override;
 
-	virtual void seek(Cappuccino::GameObject* other);
-	virtual void attack(Cappuccino::GameObject* other);
+	virtual void seek(Cappuccino::GameObject* other,float dt);
+	virtual void attack(Cappuccino::GameObject* other,float dt);
 
-	Cappuccino::HitBox triggerVolume{ glm::vec3(0.0f,0.0f,0.0f),glm::vec3(1.0f,0.5f,1.0f)*5.0f };
+	Cappuccino::HitBox triggerVolume{ glm::vec3(0.0f,0.0f,0.0f),glm::vec3(1.0f,0.5f,1.0f)*10.0f };
 	Gun* _gun;
 };
