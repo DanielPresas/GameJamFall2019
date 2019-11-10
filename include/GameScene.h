@@ -37,4 +37,6 @@ private:
 
 	Cappuccino::UserInterface* UI;
 	Cappuccino::UIText* playerHealth;
+
+	unsigned musicHandle = 0, groupHandle = 0;
 };

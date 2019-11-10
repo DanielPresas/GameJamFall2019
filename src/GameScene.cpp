@@ -1,6 +1,7 @@
 #include "GameScene.h"
 
-#include "Cappuccino/Random.h"
+#include <Cappuccino/Random.h>
+#include <Cappuccino/SoundSystem.h>
 
 using namespace Cappuccino;
 
@@ -48,18 +49,22 @@ GameScene::GameScene(const bool firstScene) : Scene(firstScene)
 	
 	playerHealth = new UIText("Health: " + std::to_string(player->health),
 	                          glm::vec2(1600.0f, 1200.0f),
-	                          glm::vec2(0.0f, -950.0f),
+	                          glm::vec2(-100.0f, -200.0f),
 	                          glm::vec3(1.0f, 1.0f, 1.0f),
 	                          1.0f);
 
 	UI->_uiComponents.push_back(playerHealth);
-	
+
+	musicHandle = SoundSystem::load2DSound("FightSong.wav");
+	groupHandle = SoundSystem::createChannelGroup("backgroundMusic");
 }
 
 bool GameScene::init() {
 	player->setActive(true);
 	for (auto x : enemies)
 		x->setActive(true);
+
+	SoundSystem::playSound2D(musicHandle, groupHandle, SoundSystem::ChannelType::SoundEffect);
 
 	return true;
 }
@@ -69,6 +74,9 @@ bool GameScene::exit() {
 	player->setActive(false);
 	for (auto x : enemies)
 		x->setActive(false);
+
+	SoundSystem::getChannels()[0]->stop();
+	
 	return true;
 }
 
