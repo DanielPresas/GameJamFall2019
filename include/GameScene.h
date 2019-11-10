@@ -27,5 +27,5 @@ private:
 	Cappuccino::DirLight dirLight{ Cappuccino::DirLight(glm::vec2(1600.0f, 1200.0f), glm::vec3(0.0f, -1.0f, -1.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), 512.0f) };
 	Cappuccino::Camera camera;
 
-
+	static std::vector<std::string> _enemyTextures;
 };
