@@ -57,3 +57,31 @@ void Pistol::shoot(float dt, const glm::vec3& startPos)
 		index = 0;
 
 }
+
+Rapid::Rapid(Cappuccino::Shader* shader)
+	:Gun(0.5f, 0.2f, shader)
+{
+
+}
+
+void Rapid::shoot(float dt, const glm::vec3& startPos)
+{
+
+	static float timer = _rateOfFire;
+
+	timer -= dt;
+
+	if (!(timer <= 0.0f))
+		return;
+	timer = _rateOfFire;
+
+	_bullets[index]->_rigidBody._position = startPos;
+	_bullets[index]->setActive(true);
+	_bullets[index]->lifetime = 10.0f;
+	_bullets[index]->_rigidBody.setVelocity(_shootDir * 30.0f);
+
+
+	index++;
+	if (index > _bullets.size() - 1)
+		index = 0;
+}

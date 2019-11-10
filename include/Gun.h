@@ -33,3 +33,10 @@ public:
 
 	void shoot(float dt, const glm::vec3& startPos) override;
 };
+
+class Rapid : public Gun {
+public:
+	Rapid(Cappuccino::Shader* shader);
+
+	void shoot(float dt, const glm::vec3& startPos) override;
+};
