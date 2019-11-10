@@ -4,23 +4,35 @@
 
 using namespace Cappuccino;
 
+std::vector<std::string> GameScene::_enemyTextures = {
+	"Baymax.jpg",
+	"BobTheBuilder.png",
+	"Deadpool.png",
+	"Doomguy.png",
+	"FilthyFrank.jpg",
+	"Kratos.png",
+	"MasterChief.png",
+	"PostMalone.png",
+	"Sanic.jpg",
+	"Sans.jpg",
+	"Shrek.jpg",
+	"Spiderman.png",
+	"VaultBoy.jpg"
+};
+
 GameScene::GameScene(bool firstScene) : Scene(firstScene)
 {
-	glm::mat4 p = glm::mat4(1.0f);
-	p = glm::perspective(glm::radians(45.0f), (float)1600.0f / (float)1200.0f, 0.1f, 100.0f);
+	glm::mat4 p = glm::perspective(glm::radians(45.0f), (float)1600.0f / (float)1200.0f, 0.1f, 100.0f);
 	camera.setPosition(glm::vec3(0.0f, 10.0f, 7.0f));
 	camera.lookAt(glm::vec3(0.0f, 0.0f, 0.0f));
 	
 	player = new Player(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Jenko.png", TextureType::DiffuseMap) }, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Rapid(&dirLight._dirLightShader));
 	player->_transform.rotate(glm::vec3(0.0f, 1.0f, 0.0f), 180);
-	player->_rigidBody._position = glm::vec3(0.0f, 0.0f, 3.0f);
 
-	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Kratos.png",      TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Pistol(&dirLight._dirLightShader)));
-	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("MasterChief.png", TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Rapid(&dirLight._dirLightShader)));
-	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Schmidt.png",     TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Pistol(&dirLight._dirLightShader)));
-	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("VaultBoy.jpg",    TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Pistol(&dirLight._dirLightShader)));
-	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Deadpool.png",    TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Rapid(&dirLight._dirLightShader)));
-	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Baymax.jpg",      TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Pistol(&dirLight._dirLightShader)));
+	for(const auto& texture : _enemyTextures) {
+		enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture(texture, TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Pistol(&dirLight._dirLightShader)));
+	}
+
 	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Pacman.png",      TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("pacman.obj"),   }, new Pistol(&dirLight._dirLightShader)));
 
 	for (unsigned int i = 0; i < enemies.size(); ++i) {
@@ -48,6 +60,10 @@ bool GameScene::exit() {
 
 void GameScene::childUpdate(float dt) {
 
+	glm::vec3 offset(0.0f, 10.0f, 7.0f);
+	camera.setPosition(glm::vec3(player->_rigidBody._position) + offset);
+	camera.lookAt(player->_rigidBody._position/* + glm::vec3(0.0f, 0.0f, -7.0f)*/);
+	
 	for(auto e1 : enemies) {
 		enum Direction : unsigned int {
 			FORWARD = 1,
@@ -132,8 +148,14 @@ void GameScene::childUpdate(float dt) {
 	dirLight._dirLightShader.loadViewMatrix(camera);
 	dirLight.updateViewPos(camera.getPosition());
 
-	for (auto x : enemies)
+	glm::mat4 p = glm::perspective(glm::radians(45.0f), (float)1600.0f / (float)1200.0f, 0.1f, 100.0f);
+
+	player->_rigidBody.setViewProjMat(camera.whereAreWeLooking(), p);
+	
+	for(auto x : enemies) {
 		x->seek(player, dt);
+		x->_rigidBody.setViewProjMat(camera.whereAreWeLooking(), p);
+	}
 
 }
 
