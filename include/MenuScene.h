@@ -31,5 +31,6 @@ private:
 
 	Cappuccino::HitBox cursorBox;
 	Cappuccino::HitBox startBox;
+	Cappuccino::HitBox creditsBox;
 
 };

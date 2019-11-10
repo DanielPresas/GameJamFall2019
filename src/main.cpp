@@ -2,6 +2,7 @@
 
 #include "GameScene.h"
 #include "MenuScene.h"
+#include "CreditsScene.h"
 
 using Application = Cappuccino::Application;
 using FontManager = Cappuccino::FontManager;
@@ -49,6 +50,7 @@ int main() {
 
 
 		GameScene* game = new GameScene(false);
+		CreditsScene* credits = new CreditsScene(false);
 		MenuScene* GiuliaIsTheBest = new MenuScene(true);
 		GiuliaIsTheBest->init();
 		
