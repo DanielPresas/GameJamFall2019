@@ -5,6 +5,7 @@
 
 #include <Cappuccino/SceneManager.h>
 #include <Cappuccino/DirLight.h>
+#include "Cappuccino/PointLight.h"
 
 class GameScene : Cappuccino::Scene {
 public:
