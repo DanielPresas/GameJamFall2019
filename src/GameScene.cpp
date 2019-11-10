@@ -13,8 +13,10 @@ std::vector<std::string> GameScene::enemyTextures = {
 	"Doomguy.png",
 	"FilthyFrank.jpg",
 	"Freeman.png",
+	"Josh.png",
 	"Kratos.png",
 	"MasterChief.png",
+	"NeilArmstrong.png",
 	"PostMalone.png",
 	"RonaldMcdonald.png",
 	"Sanic.jpg",
@@ -39,7 +41,9 @@ GameScene::GameScene(const bool firstScene) : Scene(firstScene)
 	}
 
 	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Pacman.png", TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("pacman.obj") }, new Pistol(&dirLight._dirLightShader)));
+	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("ThomasTheTankEngine.jpg", TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("train.obj") }, new Pistol(&dirLight._dirLightShader)));
 
+	
 	for(const auto& enemy : enemies) {
 		enemy->_rigidBody._position = glm::vec3(randomFloat(-20.0f, 20.0f), 0.0f, randomFloat(-20.0f, -10.0f));
 		enemy->_rigidBody.setViewProjMat(camera.whereAreWeLooking(), p);
