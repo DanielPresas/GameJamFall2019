@@ -11,17 +11,17 @@ GameScene::GameScene(bool firstScene) : Scene(firstScene)
 	camera.setPosition(glm::vec3(0.0f, 10.0f, 7.0f));
 	camera.lookAt(glm::vec3(0.0f, 0.0f, 0.0f));
 	
-	player = new Player(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Jenko.png", TextureType::DiffuseMap) }, std::vector<Mesh*>{ new Mesh("humanoid2.obj") });
+	player = new Player(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Jenko.png", TextureType::DiffuseMap) }, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Rapid(&dirLight._dirLightShader));
 	player->_transform.rotate(glm::vec3(0.0f, 1.0f, 0.0f), 180);
 	player->_rigidBody._position = glm::vec3(0.0f, 0.0f, 3.0f);
 
-	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Kratos.png", TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Pistol(&dirLight._dirLightShader)));
+	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Kratos.png",      TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Pistol(&dirLight._dirLightShader)));
 	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("MasterChief.png", TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Rapid(&dirLight._dirLightShader)));
-	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Schmidt.png", TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Pistol(&dirLight._dirLightShader)));
-	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("VaultBoy.jpg", TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Pistol(&dirLight._dirLightShader)));
-	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Deadpool.png", TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Rapid(&dirLight._dirLightShader)));
-	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Baymax.jpg", TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Pistol(&dirLight._dirLightShader)));
-	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Pacman.png", TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("pacman.obj"), }, new Pistol(&dirLight._dirLightShader)));
+	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Schmidt.png",     TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Pistol(&dirLight._dirLightShader)));
+	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("VaultBoy.jpg",    TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Pistol(&dirLight._dirLightShader)));
+	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Deadpool.png",    TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Rapid(&dirLight._dirLightShader)));
+	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Baymax.jpg",      TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Pistol(&dirLight._dirLightShader)));
+	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Pacman.png",      TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("pacman.obj"),   }, new Pistol(&dirLight._dirLightShader)));
 
 	for (unsigned int i = 0; i < enemies.size(); ++i) {
 		enemies[i]->_rigidBody._position = glm::vec3(randomFloat(-15.0f, 15.0f), 0.0f, randomFloat(-15.0f, -8.0f));
