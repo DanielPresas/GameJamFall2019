@@ -23,6 +23,7 @@ private:
 	void childUpdate(float dt) override;
 
 	static std::vector<std::string> enemyTextures;
+	static std::vector<std::string> trainTextures;
 
 	Player* player{};
 	std::vector<Enemy*> enemies;

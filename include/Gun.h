@@ -7,7 +7,7 @@ public:
 
 	void childUpdate(float dt) override;
 
-	float lifetime = 15.0f;
+	float lifetime = 20.0f;
 
 };
 

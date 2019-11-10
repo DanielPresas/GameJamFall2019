@@ -27,6 +27,11 @@ std::vector<std::string> GameScene::enemyTextures = {
 	"VaultBoy.jpg"
 };
 
+std::vector<std::string> GameScene::trainTextures {
+	"Thomas.jpg",
+	"Percy.jpg"
+};
+
 GameScene::GameScene(const bool firstScene) : Scene(firstScene)
 {	
 	glm::mat4 p = glm::perspective(glm::radians(45.0f), 1600.0f / 1200.0f, 0.1f, 100.0f);
@@ -38,10 +43,17 @@ GameScene::GameScene(const bool firstScene) : Scene(firstScene)
 
 	for(const auto& texture : enemyTextures) {
 		enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture(texture, TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Pistol(&dirLight._dirLightShader)));
+
+		if(texture == "Josh.png") {
+			enemies.back()->_transform.scale(glm::vec3(1.0f), 0.8f);
+		}
 	}
 
+	for(const auto& texture : trainTextures) {
+		enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture(texture, TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("train.obj") }, new Pistol(&dirLight._dirLightShader)));
+	}
+	
 	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Pacman.png", TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("pacman.obj") }, new Pistol(&dirLight._dirLightShader)));
-	enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("ThomasTheTankEngine.jpg", TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("train.obj") }, new Pistol(&dirLight._dirLightShader)));
 
 	
 	for(const auto& enemy : enemies) {
