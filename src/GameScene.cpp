@@ -47,6 +47,87 @@ bool GameScene::exit() {
 
 void GameScene::childUpdate(float dt) {
 
+	for(auto e1 : enemies) {
+		enum Direction : unsigned int {
+			FORWARD = 1,
+			BACKWARD,
+			LEFT,
+			RIGHT
+		};
+
+		std::vector<glm::vec3> directions = {
+			glm::vec3( 0.0, 0.0f,  1.0f),	// forward
+			glm::vec3( 0.0, 0.0f, -1.0f),	// backward
+			glm::vec3(-1.0, 0.0f,  0.0f),	// left
+			glm::vec3( 1.0, 0.0f,  0.0f),	// right
+		};
+		
+		glm::vec3 displacement;
+		unsigned bestMatch = 0;
+
+		for(auto e2 : enemies) {
+			if(e1->checkCollision(*e2)) {
+				displacement = e1->_rigidBody._position - e2->_rigidBody._position;
+
+				float max = 0.0f;
+				for(unsigned i = 0; i < 4; ++i) {
+					const float dotProduct = glm::dot(glm::normalize(displacement), directions[i]);
+
+					if(dotProduct > max) {
+						max = dotProduct;
+						bestMatch = i + 1;
+					}
+				}
+
+				const Direction dir = static_cast<Direction>(bestMatch);
+
+				if(dir == LEFT) {
+					e1->_rigidBody._position.x -= 0.05f;
+				}
+				else if(dir == RIGHT) {
+					e1->_rigidBody._position.x += 0.05f;
+				}
+				else if(dir == FORWARD) {
+					e1->_rigidBody._position.z += 0.05f;
+				}
+				else if(dir == BACKWARD) {
+					e1->_rigidBody._position.z -= 0.05f;
+				}
+			}
+		}
+
+		if(e1->checkCollision(*player)) {
+			displacement = e1->_rigidBody._position - player->_rigidBody._position;
+
+			float max = 0.0f;
+			for(unsigned i = 0; i < 4; ++i) {
+				const float dotProduct = glm::dot(glm::normalize(displacement), directions[i]);
+
+				if(dotProduct > max) {
+					max = dotProduct;
+					bestMatch = i + 1;
+				}
+			}
+
+			const Direction dir = static_cast<Direction>(bestMatch);
+
+			if(dir == LEFT) {
+				e1->_rigidBody._position.x -= 0.05f;
+			}
+			else if(dir == RIGHT) {
+				e1->_rigidBody._position.x += 0.05f;
+			}
+			else if(dir == FORWARD) {
+				e1->_rigidBody._position.z += 0.05f;
+			}
+			else if(dir == BACKWARD) {
+				e1->_rigidBody._position.z -= 0.05f;
+			}
+		}
+
+		
+	}
+
 	dirLight._dirLightShader.loadViewMatrix(camera);
 	dirLight.updateViewPos(camera.getPosition());
 
