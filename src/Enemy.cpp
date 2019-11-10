@@ -1,6 +1,6 @@
 #include "Enemy.h"
-#include "Cappuccino/CappMacros.h"
 #include "Cappuccino/HitBoxLoader.h"
+
 using namespace Cappuccino;
 
 Enemy::Enemy(Shader& shader, const std::vector<Texture*>& textures, const std::vector<Mesh*>& meshes, Gun* gun)
@@ -8,45 +8,42 @@ Enemy::Enemy(Shader& shader, const std::vector<Texture*>& textures, const std::v
 {
 	auto loader = HitBoxLoader("./Assets/Meshes/playerBox.obj");
 
-	for (auto x : loader._boxes)
+	for(auto x : loader._boxes) {
 		_rigidBody._hitBoxes.push_back(x);
+	}
 
+	_rigidBody.drawHitBox = false;
 	_rigidBody.setGrav(false);
-	_gun = gun;
+	this->gun = gun;
 }
 
 void Enemy::childUpdate(float dt)
 {
 	triggerVolume._position = _rigidBody._position;
 
-	_rigidBody._shader.use();
+	//_rigidBody._shader.use();
 	//triggerVolume.draw();
 }
 
-void Enemy::seek(Cappuccino::GameObject* other,float dt)
+void Enemy::seek(GameObject* other, const float dt)
 {
-	auto dir = other->_rigidBody._position - _rigidBody._position;
-
-	auto norm = glm::normalize(dir);
-
+	const glm::vec3 norm = glm::normalize(other->_rigidBody._position - _rigidBody._position);
 	_rigidBody.setVelocity(norm * 3.0f);
 
-	attack(other,dt);
+	attack(other, dt);
 }
 
-void Enemy::attack(Cappuccino::GameObject* other,float dt)
+void Enemy::attack(GameObject* other, const float dt)
 {
 	if (!other->checkCollision(triggerVolume, _rigidBody._position))
 		return;
 
+	//auto dir = other->_rigidBody._position - _rigidBody._position;
+	//auto norm = glm::normalize(dir);
 
-	auto dir = other->_rigidBody._position - _rigidBody._position;
+	gun->_shootDir = glm::normalize(_rigidBody._vel);
 
-	auto norm = glm::normalize(dir);
-
-	_gun->_shootDir = glm::normalize(_rigidBody._vel);
-
-	_gun->shoot(dt,_rigidBody._position);
+	gun->shoot(dt, _rigidBody._position);
 
 }
 

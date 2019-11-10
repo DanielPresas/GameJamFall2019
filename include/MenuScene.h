@@ -18,10 +18,11 @@ public:
 	void clickFunction(int button, int action, int mods) override;
 
 private:
+	unsigned musicHandle = 0, groupHandle = 0;
+	
 	Cappuccino::CappInput _in;
 
 	Cappuccino::UserInterface ui;
-	Cappuccino::Shader* _uiShader;
 
 	Cappuccino::Camera camera;
 	Cappuccino::Shader* menuShader;

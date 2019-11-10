@@ -2,16 +2,15 @@
 #include "Cappuccino/HitBoxLoader.h"
 
 Gun::Gun(float damage, float rateOfFire, Cappuccino::Shader* shader)
-	:_damage(damage), _rateOfFire(rateOfFire)
+	: _rateOfFire(rateOfFire), _damage(damage)
 {
-
 	_bullets.push_back(new Projectile(shader, std::vector<Cappuccino::Texture*>{new Cappuccino::Texture("nut.png", Cappuccino::TextureType::DiffuseMap)}, std::vector<Cappuccino::Mesh*>{new Cappuccino::Mesh("projectile.obj")}));
 	for (unsigned i = 0; i < 99; i++)
 		_bullets.push_back(_bullets[0]);
 }
 
 Projectile::Projectile(Cappuccino::Shader* SHADER, const std::vector<Cappuccino::Texture*>& textures, const std::vector<Cappuccino::Mesh*>& meshes)
-	:Cappuccino::GameObject(*SHADER, textures, meshes)
+	: GameObject(*SHADER, textures, meshes)
 {
 	auto loader = Cappuccino::HitBoxLoader("./Assets/Meshes/projectileBox.obj");
 
@@ -26,12 +25,11 @@ void Projectile::childUpdate(float dt)
 	lifetime -= dt;
 	if (lifetime <= 0.0f) {
 		setActive(false);
-		return;
 	}
 }
 
 Pistol::Pistol(Cappuccino::Shader* shader)
-	:Gun(1.0f, 0.6f, shader)
+	: Gun(1.0f, 0.6f, shader)
 {
 }
 
