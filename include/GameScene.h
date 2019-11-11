@@ -25,9 +25,11 @@ private:
 
 	static std::vector<std::string> enemyTextures;
 	static std::vector<std::string> trainTextures;
-
+	static int KILLS;
+	
 	Player* player{};
 	std::vector<Enemy*> enemies;
+	std::vector<Projectile*> sceneParticles;
 
 	LevelPlane* levelPlane;
 	
@@ -43,4 +45,6 @@ private:
 	Cappuccino::UIText* playerHealth;
 
 	unsigned musicHandle = 0, groupHandle = 0;
+	unsigned hurt = 0;
+	unsigned die = 0;
 };

@@ -20,6 +20,7 @@ Projectile::Projectile(Shader* SHADER, const std::vector<Texture*>& textures, co
 	for (auto x : loader._boxes)
 		_rigidBody._hitBoxes.push_back(x);
 
+	_rigidBody.drawHitBox = false;
 	_rigidBody.setGrav(false);
 }
 
