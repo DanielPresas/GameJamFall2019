@@ -9,6 +9,7 @@ std::vector<std::string> GameScene::enemyTextures = {
 	"Amtoj.png",
 	"Baymax.jpg",
 	"BobTheBuilder.png",
+	"DarthVader.jpg",
 	"Deadpool.png",
 	"Doomguy.png",
 	"FilthyFrank.jpg",
@@ -16,6 +17,7 @@ std::vector<std::string> GameScene::enemyTextures = {
 	"HarryPotter.png",
 	"Josh.png",
 	"Kratos.png",
+	"LaraCroft.png",
 	"MasterChief.png",
 	"MichaelJordan.jpg",
 	"Minion.png",
@@ -104,6 +106,9 @@ GameScene::GameScene(const bool firstScene) : Scene(firstScene)
 }
 
 bool GameScene::init() {
+	_initialized = true;
+	_shouldExit = false;
+	
 	levelPlane->setActive(true);
 	player->setActive(true);
 	for (auto x : enemies)
@@ -122,6 +127,9 @@ bool GameScene::exit() {
 		x->setActive(false);
 
 	SoundSystem::getChannels()[0]->stop();
+
+	_initialized = false;
+	_shouldExit = true;
 	
 	return true;
 }
