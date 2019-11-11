@@ -82,7 +82,7 @@ GameScene::GameScene(const bool firstScene) : Scene(firstScene)
 
 	for (unsigned i = 0; i < 100; i++) {
 		sceneParticles.push_back(new Projectile(&dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Pacman.png", TextureType::DiffuseMap) }, std::vector<Mesh*>{new Mesh("projectile.obj")}));
-		sceneParticles.back()->_transform.scale(glm::vec3(1.0f, 1.0f, 1.0f), 0.25f);
+		sceneParticles.back()->_transform.scale(glm::vec3(1.0f, 1.0f, 1.0f), 0.5f);
 	}
 
 	// Level instantiation
@@ -170,7 +170,7 @@ void GameScene::childUpdate(float dt) {
 			KILLS++;
 			e1->_rigidBody._position = player->_rigidBody._position + glm::vec3(randomFloat(-25.0f, 25.0f), 0.0f, randomFloat(-25.0f, -15.0f));
 			e1->health = 10;
-
+			camera.setPosition(camera.getPosition() + glm::vec3(randomFloat(-0.5f, 0.5f), randomFloat(-0.5f, 0.5f), randomFloat(-0.5f, 0.5f)));
 
 		}
 
