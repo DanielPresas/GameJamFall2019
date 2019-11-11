@@ -1,5 +1,8 @@
 #include "Player.h"
-#include "Cappuccino/HitBoxLoader.h"
+
+#include <Cappuccino/HitBoxLoader.h>
+#include <Cappuccino/SoundSystem.h>
+
 using namespace Cappuccino;
 
 Player::Player(Shader& shader, std::vector<Texture*>& textures, std::vector<Mesh*>& meshes, Gun* gun) :
@@ -14,6 +17,9 @@ Player::Player(Shader& shader, std::vector<Texture*>& textures, std::vector<Mesh
 	_rigidBody.drawHitBox = false;
 	_rigidBody.setGrav(false);
 
+	soundHandle = SoundSystem::load2DSound("Gun.wav");
+	groupHandle = SoundSystem::createChannelGroup("gunGroup");
+	
 	this->gun = gun;
 
 }
@@ -64,5 +70,7 @@ void Player::childUpdate(const float dt) {
 
 		gun->_shootDir = shootDirection;
 		gun->shoot(dt, _rigidBody._position);
+
+		//SoundSystem::playSound2D(soundHandle, groupHandle, SoundSystem::ChannelType::SoundEffect);
 	}
 }

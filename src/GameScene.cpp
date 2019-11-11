@@ -13,9 +13,12 @@ std::vector<std::string> GameScene::enemyTextures = {
 	"Doomguy.png",
 	"FilthyFrank.jpg",
 	"Freeman.png",
+	"HarryPotter.png",
 	"Josh.png",
 	"Kratos.png",
 	"MasterChief.png",
+	"MichaelJordan.jpg",
+	"Minion.png",
 	"NeilArmstrong.png",
 	"PostMalone.png",
 	"RonaldMcdonald.png",
@@ -29,7 +32,9 @@ std::vector<std::string> GameScene::enemyTextures = {
 
 std::vector<std::string> GameScene::trainTextures {
 	"Thomas.jpg",
-	"Percy.jpg"
+	"Percy.jpg",
+	"James.jpg",
+	"James2.jpg"
 };
 
 GameScene::GameScene(const bool firstScene) : Scene(firstScene)
@@ -37,10 +42,12 @@ GameScene::GameScene(const bool firstScene) : Scene(firstScene)
 	glm::mat4 p = glm::perspective(glm::radians(45.0f), 1600.0f / 1200.0f, 0.1f, 100.0f);
 	camera.setPosition(glm::vec3(0.0f, 10.0f, 7.0f));
 	camera.lookAt(glm::vec3(0.0f, 0.0f, 0.0f));
-	
+
+	// Player instantiation
 	player = new Player(dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Jenko.png", TextureType::DiffuseMap) }, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Rapid(&dirLight._dirLightShader));
 	player->_transform.rotate(glm::vec3(0.0f, 1.0f, 0.0f), 180);
 
+	// Enemy instantiation
 	for(const auto& texture : enemyTextures) {
 		enemies.push_back(new Enemy(dirLight._dirLightShader, std::vector<Texture*>{ new Texture(texture, TextureType::DiffuseMap)}, std::vector<Mesh*>{ new Mesh("humanoid2.obj") }, new Pistol(&dirLight._dirLightShader)));
 
@@ -61,6 +68,12 @@ GameScene::GameScene(const bool firstScene) : Scene(firstScene)
 		enemy->_rigidBody.setViewProjMat(camera.whereAreWeLooking(), p);
 	}
 
+	// Level instantiation
+	levelPlane = new LevelPlane(dirLight._dirLightShader);
+	levelPlane->_transform.scale(glm::vec3(1.0f, 0.0f, 1.0f), 3.0f);
+	levelPlane->_rigidBody._position = glm::vec3(-15.0f, 0.0f, 20.0f);
+
+	// UI creation
 	UI = new UserInterface;
 	
 	playerHealth = new UIText("Health: " + std::to_string(player->health),
@@ -71,11 +84,14 @@ GameScene::GameScene(const bool firstScene) : Scene(firstScene)
 
 	UI->_uiComponents.push_back(playerHealth);
 
+
+	// Sound manager
 	musicHandle = SoundSystem::load2DSound("FightSong.wav");
 	groupHandle = SoundSystem::createChannelGroup("backgroundMusic");
 }
 
 bool GameScene::init() {
+	levelPlane->setActive(true);
 	player->setActive(true);
 	for (auto x : enemies)
 		x->setActive(true);
@@ -87,6 +103,7 @@ bool GameScene::init() {
 
 bool GameScene::exit() {
 
+	levelPlane->setActive(false);
 	player->setActive(false);
 	for (auto x : enemies)
 		x->setActive(false);

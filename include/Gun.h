@@ -14,6 +14,7 @@ public:
 class Gun {
 public:
 	Gun(float damage, float rateOfFire, Cappuccino::Shader* shader);
+	virtual ~Gun() = default;
 
 	virtual void shoot(float dt,const glm::vec3& startPos) = 0;
 
@@ -23,6 +24,7 @@ public:
 protected:
 	std::vector<Projectile*> _bullets;
 	unsigned int index = 0;
+	
 	float _rateOfFire = 0.0f;
 private:
 	float _damage = 0.0f;

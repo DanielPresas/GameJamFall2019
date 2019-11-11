@@ -17,7 +17,7 @@ public:
 
 	int health = 3;
 private:
-
+	unsigned int soundHandle = 0, groupHandle = 0;
 	float _speed = 5.0f;
 	
 	Cappuccino::CappInput _input;

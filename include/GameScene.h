@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Enemy.h"
+#include "LevelPlane.h"
 #include "Player.h"
 
 #include <Cappuccino/SceneManager.h>
@@ -27,6 +28,8 @@ private:
 
 	Player* player{};
 	std::vector<Enemy*> enemies;
+
+	LevelPlane* levelPlane;
 	
 	Cappuccino::DirLight dirLight { glm::vec2(1600.0f, 1200.0f),
 	                                glm::vec3(0.0f, -1.0f, -1.0f),
