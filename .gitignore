@@ -334,5 +334,5 @@ ASALocalRun/
 !Assets/*
 *.vcxproj
 *.filters
-
-GameJam.sln
+*.sln
+*.zip

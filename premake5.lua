@@ -23,8 +23,7 @@ workspace ("GameJam")
 		defines "Win64"
     
     libdirs {
-		os.getenv("CappuccinoPath") .. "/Build/bin/%{cfg.architecture}/%{cfg.buildcfg}",
-		os.getenv("CappuccinoPath") .. "/Externals/Build/bin/%{cfg.architecture}/%{cfg.buildcfg}"
+		"./libs"
     }
     
     filter "platforms:x64"
