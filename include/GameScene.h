@@ -28,6 +28,7 @@ private:
 
 	Player* player{};
 	std::vector<Enemy*> enemies;
+	std::vector<Projectile*> sceneParticles;
 
 	LevelPlane* levelPlane;
 	

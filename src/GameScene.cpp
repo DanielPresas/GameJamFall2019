@@ -68,6 +68,11 @@ GameScene::GameScene(const bool firstScene) : Scene(firstScene)
 		enemy->_rigidBody.setViewProjMat(camera.whereAreWeLooking(), p);
 	}
 
+	for (unsigned i = 0; i < 100; i++) {
+		sceneParticles.push_back(new Projectile(&dirLight._dirLightShader, std::vector<Texture*>{ new Texture("Pacman.png", TextureType::DiffuseMap) }, std::vector<Mesh*>{new Mesh("projectile.obj")}));
+		sceneParticles.back()->_transform.scale(glm::vec3(1.0f, 1.0f, 1.0f), 0.25f);
+	}
+
 	// Level instantiation
 	levelPlane = new LevelPlane(dirLight._dirLightShader);
 	levelPlane->_transform.scale(glm::vec3(1.0f, 0.0f, 1.0f), 3.0f);
@@ -130,8 +135,15 @@ void GameScene::childUpdate(float dt) {
 		}
 
 		if(e1->health <= 0) {
+			for (unsigned i = 0; i < sceneParticles.size(); i++) {
+				sceneParticles[i]->setActive(true);
+				sceneParticles[i]->_rigidBody._position = e1->_rigidBody._position;
+				sceneParticles[i]->_rigidBody.setVelocity(glm::vec3(cosf(i) * (1.0f + i), 0.0f, -sinf(i) * (1.0f + i)));
+			}
 			e1->_rigidBody._position = player->_rigidBody._position + glm::vec3(randomFloat(-25.0f, 25.0f), 0.0f, randomFloat(-25.0f, -15.0f));
 			e1->health = 10;
+
+
 		}
 
 		for(auto bullet : e1->gun->getProjectiles()) {
