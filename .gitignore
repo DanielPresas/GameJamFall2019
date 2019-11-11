@@ -332,6 +332,7 @@ ASALocalRun/
 
 !Assets/**/*.obj
 !Assets/*
+!libs/*
 *.vcxproj
 *.filters
 *.sln

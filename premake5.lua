@@ -23,7 +23,7 @@ workspace ("GameJam")
 		defines "Win64"
     
     libdirs {
-		"./libs"
+		"./libs/%{cfg.buildcfg}"
     }
     
     filter "platforms:x64"
