@@ -4,7 +4,7 @@
 #include <Cappuccino/SoundSystem.h>
 
 using namespace Cappuccino;
-
+int GameScene::KILLS = 0;
 std::vector<std::string> GameScene::enemyTextures = {
 	"Amtoj.png",
 	"Baymax.jpg",
@@ -88,11 +88,19 @@ GameScene::GameScene(const bool firstScene) : Scene(firstScene)
 	                          1.0f);
 
 	UI->_uiComponents.push_back(playerHealth);
+	UI->_uiComponents.push_back(new  UIText("Kills: " + std::to_string(KILLS),
+		glm::vec2(1600.0f, 1200.0f),
+		glm::vec2(-100.0f, -400.0f),
+		glm::vec3(1.0f, 1.0f, 1.0f),
+		1.0f));
 
 
 	// Sound manager
 	musicHandle = SoundSystem::load2DSound("FightSong.wav");
 	groupHandle = SoundSystem::createChannelGroup("backgroundMusic");
+	hurt = SoundSystem::load2DSound("pain.mp3");
+	die = SoundSystem::load2DSound("die.mp3");
+
 }
 
 bool GameScene::init() {
@@ -130,6 +138,7 @@ void GameScene::childUpdate(float dt) {
 			if(bullet->isActive() && bullet->_rigidBody.checkCollision(e1->_rigidBody)) {
 				e1->health -= 5;
 				bullet->setActive(false);
+				SoundSystem::playSound2D(hurt, groupHandle, SoundSystem::ChannelType::SoundEffect);
 				break;
 			}
 		}
@@ -140,6 +149,7 @@ void GameScene::childUpdate(float dt) {
 				sceneParticles[i]->_rigidBody._position = e1->_rigidBody._position;
 				sceneParticles[i]->_rigidBody.setVelocity(glm::vec3(cosf(i) * (1.0f + i), 0.0f, -sinf(i) * (1.0f + i)));
 			}
+			KILLS++;
 			e1->_rigidBody._position = player->_rigidBody._position + glm::vec3(randomFloat(-25.0f, 25.0f), 0.0f, randomFloat(-25.0f, -15.0f));
 			e1->health = 10;
 
@@ -157,6 +167,9 @@ void GameScene::childUpdate(float dt) {
 		if(player->health <= 0) {
 			player->_rigidBody._position = glm::vec3(0.0f);
 			player->health = 3;
+
+			SoundSystem::playSound2D(die, groupHandle, SoundSystem::ChannelType::SoundEffect);
+			KILLS = 0;
 
 			for(const auto& enemy : enemies) {
 				enemy->_rigidBody._position = glm::vec3(randomFloat(-15.0f, 15.0f), 0.0f, randomFloat(-15.0f, -8.0f));
@@ -265,6 +278,7 @@ void GameScene::childUpdate(float dt) {
 
 
 	playerHealth->setText("Health: " + std::to_string(player->health));
+	dynamic_cast<UIText*>(UI->_uiComponents.back())->setText("Kills: " + std::to_string(KILLS));
 	UI->update(dt);
 }
 
