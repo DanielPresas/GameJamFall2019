@@ -6,14 +6,14 @@ workspace ("GameJam")
 	platforms "x64"
 	
 	includedirs {
-		os.getenv("CappuccinoPath") .. "/Cappuccino/include",
-		os.getenv("CappuccinoPath") .. "/Externals/fmod/include",
-		os.getenv("CappuccinoPath") .. "/Externals/freetype/include",
-		os.getenv("CappuccinoPath") .. "/Externals/glad/include",
-		os.getenv("CappuccinoPath") .. "/Externals/glfw3/include",
-		os.getenv("CappuccinoPath") .. "/Externals/glm/include",
-		os.getenv("CappuccinoPath") .. "/Externals/imgui/include",
-        os.getenv("CappuccinoPath") .. "/Externals/stb/include",
+		"./include/Cappuccino/include",
+		"./include/Externals/fmod/include",
+		"./include/Externals/freetype/include",
+		"./include/Externals/glad/include",
+		"./include/Externals/glfw3/include",
+		"./include/Externals/glm/include",
+		"./include/Externals/imgui/include",
+        "./include/Externals/stb/include",
         "./include"
 	}
 
@@ -23,9 +23,8 @@ workspace ("GameJam")
 		defines "Win64"
     
     libdirs {
-		os.getenv("CappuccinoPath") .. "/Build/bin/%{cfg.architecture}/%{cfg.buildcfg}",
-		os.getenv("CappuccinoPath") .. "/Externals/Build/bin/%{cfg.architecture}/%{cfg.buildcfg}"
-    }
+		"./libs"
+	}
     
     filter "platforms:x64"
 		system "windows"
@@ -71,8 +70,7 @@ workspace ("GameJam")
 	}
 	
 	files {
-		"./include/**.h",
-		"./include/**.hpp",
-		"./src/**.cpp",
-		"./Assets/**"
+		"./include/*.h",
+		"./include/*.hpp",
+		"./src/**.cpp"
 	}
